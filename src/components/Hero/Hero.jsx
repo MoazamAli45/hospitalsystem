@@ -1,4 +1,5 @@
-import React from "react";
+import { Button } from "@nextui-org/react";
+import home from "../../assets/hospital.jpg";
 export default function Hero() {
   return (
     <div className="bg-var(--softBg)">
@@ -29,33 +30,32 @@ export default function Hero() {
             <h2 className="text-var(--textColor)  text-3xl font-bold tracking-tight sm:text-4xl">
               {" "}
               {/* Use CSS variable for text color */}
-              Boost your productivity.
-              <br />
+              Welcome!
+            </h2>
+            <br />
+            <h2 className="text-gray-500  text-2xl font-bold tracking-tight sm:text-3xl">
               Start using our app today.
             </h2>
-            <p className="text-var(--softTextColor) mt-6 text-lg leading-8">
+            {/* <p className="text-var(--softTextColor) mt-6 text-lg leading-8">
               {" "}
               {/* Use CSS variable for soft text color */}
-              Ac euismod vel sit maecenas id pellentesque eu sed consectetur.
+            {/* Ac euismod vel sit maecenas id pellentesque eu sed consectetur.
               Malesuada adipiscing sagittis vel nulla.
-            </p>
+            </p>  */}
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-              <a
-                href="#"
-                className="bg-var(--softBg) text-var(--textColor) dark:hover:bg-var(--softBg) dark:focus-visible:outline-dark dark:focus-visible:outline-2-dark dark:focus-visible:outline-offset-2-dark dark:focus-visible:outline-white-dark rounded-md px-3.5   py-2.5 text-sm font-semibold shadow-sm
-               hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:hover:text-gray-800
-              
-               "
+              <Button
+                color="primary"
+                className="px-20 py-5 text-base font-medium rounded-full"
               >
-                Read More
-              </a>
+                Login
+              </Button>
             </div>
           </div>
           <div className="relative mt-16 h-80 lg:mt-8">
             <img
-              className="bg-var(--softBg)/5 absolute left-0 top-0 w-[57rem] max-w-none rounded-md "
-              src="/blog-3.jpg"
-              alt="App screenshot"
+              className="bg-var(--softBg)/5 absolute left-0 top-0 w-[57rem] max-w-none rounded-md object-right-bottom object-cover"
+              src={home}
+              alt="Home"
               width={1824}
               height={1080}
             />
