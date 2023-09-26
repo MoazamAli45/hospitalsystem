@@ -19,7 +19,7 @@ import {
   Radio,
   RadioGroup,
 } from "@nextui-org/react";
-export default function ViewInProgressComplaint() {
+export default function AllocateComplaints() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -35,9 +35,7 @@ export default function ViewInProgressComplaint() {
 
   return (
     <div className="my-[2rem]">
-      <h1 className="text-3xl font-bold text-center my-[1rem]">
-        View Complaints
-      </h1>
+      <h1 className="text-3xl font-bold text-center my-[1rem]">Complaints</h1>
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"
@@ -53,7 +51,9 @@ export default function ViewInProgressComplaint() {
             </TableColumn>
             <TableColumn className="text-primary">Estimated Cost</TableColumn>
             <TableColumn className="text-primary">Urgent/General</TableColumn>
-            <TableColumn className="text-primary">Allocated </TableColumn>
+            <TableColumn className="text-primary text-center">
+              Allocated{" "}
+            </TableColumn>
             <TableColumn className="text-primary text-center">
               Status
             </TableColumn>
@@ -61,6 +61,7 @@ export default function ViewInProgressComplaint() {
             <TableColumn className="text-primary">
               Date of Completion{" "}
             </TableColumn>
+            <TableColumn className="text-primary">View</TableColumn>
           </TableHeader>
           <TableBody>
             <TableRow key="1">
@@ -72,17 +73,23 @@ export default function ViewInProgressComplaint() {
               <TableCell>1000</TableCell>
               <TableCell>Urgent</TableCell>
 
-              <TableCell>Ahmed</TableCell>
               <TableCell>
+                {" "}
                 <Button
                   variant="bordered"
                   color="success"
                   onPress={() => openModalWithId("1")}
                 >
-                  Update
+                  Allocate to
                 </Button>
               </TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <Button variant="flat" color="success">
+                  View
+                </Button>
+              </TableCell>
             </TableRow>
             <TableRow key="2">
               <TableCell>Dental</TableCell>
@@ -93,17 +100,23 @@ export default function ViewInProgressComplaint() {
               <TableCell>1000</TableCell>
               <TableCell>Urgent</TableCell>
 
-              <TableCell>Ahmed</TableCell>
               <TableCell>
+                {" "}
                 <Button
                   variant="bordered"
                   color="success"
                   onPress={() => openModalWithId("1")}
                 >
-                  Update
+                  Allocate to
                 </Button>
               </TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <Button variant="flat" color="success">
+                  View
+                </Button>
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -117,27 +130,12 @@ export default function ViewInProgressComplaint() {
           {(closeModal) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Select Status of Job
+                Select Allocation
               </ModalHeader>
               <ModalBody>
                 <div className="flex  gap-[3rem]  items-center mx-[1rem] ">
-                  <label className="font-bold w-[18%] max-w-[full]">
-                    Status of Job
-                  </label>
-                  <RadioGroup orientation="horizontal">
-                    <Radio value="urgent" color="success">
-                      In progress
-                    </Radio>
-                    <Radio value="general" color="success">
-                      Completed
-                    </Radio>
-                  </RadioGroup>
-                </div>
-                <div className="flex  gap-[3rem]  items-center mx-[1rem] ">
-                  <label className="font-bold w-[18%] max-w-[full]">
-                    Date of Completion
-                  </label>
-                  <Input type="date" placeholder="Enter Date of Completion" />
+                  <label className=" max-w-[full]">Allocated Person</label>
+                  <Input type="text" placeholder="Enter Allocated Person" />
                 </div>
               </ModalBody>
               <ModalFooter>

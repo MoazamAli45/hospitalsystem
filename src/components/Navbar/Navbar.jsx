@@ -1,5 +1,4 @@
 import React from "react";
-import { RiAccountCircleFill } from "react-icons/ri";
 
 import {
   Navbar as NextNavbar,
@@ -16,8 +15,9 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Avatar,
-  AvatarIcon,
 } from "@nextui-org/react";
+
+import { useNavigate } from "react-router-dom";
 
 //   For url Path
 import { useLocation } from "react-router-dom";
@@ -27,6 +27,9 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
   const path = location.pathname;
+
+  //  For navigate
+  const navigate = useNavigate();
 
   const isAuth = true;
 
@@ -110,9 +113,11 @@ export default function Navbar() {
               <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">zoey@example.com</p>
+                  <p className="font-semibold">Head of Department</p>
                 </DropdownItem>
-                <DropdownItem key="settings">My Account</DropdownItem>
+                <DropdownItem key="settings" onClick={() => navigate("/me")}>
+                  My Account
+                </DropdownItem>
 
                 <DropdownItem key="logout" color="danger">
                   Log Out

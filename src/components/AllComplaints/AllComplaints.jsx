@@ -19,7 +19,7 @@ import {
   Radio,
   RadioGroup,
 } from "@nextui-org/react";
-export default function ViewInProgressComplaint() {
+export default function AllComplaints() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -36,7 +36,7 @@ export default function ViewInProgressComplaint() {
   return (
     <div className="my-[2rem]">
       <h1 className="text-3xl font-bold text-center my-[1rem]">
-        View Complaints
+        All Complaints
       </h1>
       <div className="flex flex-col gap-3">
         <Table
@@ -61,6 +61,7 @@ export default function ViewInProgressComplaint() {
             <TableColumn className="text-primary">
               Date of Completion{" "}
             </TableColumn>
+            <TableColumn className="text-primary">View</TableColumn>
           </TableHeader>
           <TableBody>
             <TableRow key="1">
@@ -73,16 +74,17 @@ export default function ViewInProgressComplaint() {
               <TableCell>Urgent</TableCell>
 
               <TableCell>Ahmed</TableCell>
+              <TableCell>Completed</TableCell>
+              <TableCell>29-09-23</TableCell>
               <TableCell>
                 <Button
-                  variant="bordered"
                   color="success"
-                  onPress={() => openModalWithId("1")}
+                  variant="flat"
+                  onPress={openModalWithId}
                 >
-                  Update
+                  view
                 </Button>
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
             <TableRow key="2">
               <TableCell>Dental</TableCell>
@@ -91,19 +93,20 @@ export default function ViewInProgressComplaint() {
               <TableCell>29-07-23</TableCell>
               <TableCell>furniture</TableCell>
               <TableCell>1000</TableCell>
-              <TableCell>Urgent</TableCell>
+              <TableCell>General</TableCell>
 
               <TableCell>Ahmed</TableCell>
+              <TableCell>Completed</TableCell>
+              <TableCell>29-07-23</TableCell>
               <TableCell>
                 <Button
-                  variant="bordered"
                   color="success"
-                  onPress={() => openModalWithId("1")}
+                  variant="flat"
+                  onPress={openModalWithId}
                 >
-                  Update
+                  view
                 </Button>
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableBody>
         </Table>

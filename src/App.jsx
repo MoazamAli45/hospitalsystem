@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar/Navbar";
 import Wrapper from "./components/Wrapper/Wrapper";
-
 import "./App.css";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer/Footer";
@@ -10,6 +9,9 @@ import ViewInProgressComplaint from "./components/ViewInProgressComplaint/ViewIn
 import CompletedJobs from "./components/CompletedJobs/CompletedJobs";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
+import Account from "./components/Account/Account";
+import AllocateComplaints from "./components/AllocateComplaints/AllocateComplaints";
+import AllComplaints from "./components/AllComplaints/AllComplaints";
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
         <Route path="/view-complaint" element={<ViewInProgressComplaint />} />
         <Route path="/completed-jobs" element={<CompletedJobs />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/allocate-complaints" element={<AllocateComplaints />} />
+        <Route path="/all-complaints" element={<AllComplaints />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/me" element={<Account />} />
       </Routes>
       <Footer />
     </Wrapper>
