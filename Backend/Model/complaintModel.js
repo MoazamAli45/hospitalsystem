@@ -34,6 +34,7 @@ const complaintSchema = new mongoose.Schema({
   },
   allocatedTo: {
     type: String,
+    default: "none",
   },
   dateOfCompletion: {
     type: Date,
