@@ -4,14 +4,14 @@ import "./App.css";
 import Hero from "./components/Hero/Hero";
 import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
-import RegisterComplaint from "./components/RegisterComplaint/RegisterComplaint";
-import ViewInProgressComplaint from "./components/ViewInProgressComplaint/ViewInProgressComplaint";
-import CompletedJobs from "./components/CompletedJobs/CompletedJobs";
+
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Account from "./components/Account/Account";
-import AllocateComplaints from "./components/AllocateComplaints/AllocateComplaints";
-import AllComplaints from "./components/AllComplaints/AllComplaints";
+
+import HodRoutes from "./components/Routes/HodRoutes";
+import DirRoutes from "./components/Routes/DirRoutes";
+import GsoRoutes from "./components/Routes/GsoRoutes";
 
 function App() {
   return (
@@ -19,14 +19,15 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Hero />} />
-        <Route path="/register-complaint" element={<RegisterComplaint />} />
-        <Route path="/view-complaint" element={<ViewInProgressComplaint />} />
-        <Route path="/completed-jobs" element={<CompletedJobs />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/allocate-complaints" element={<AllocateComplaints />} />
-        <Route path="/all-complaints" element={<AllComplaints />} />
         <Route path="/signup" element={<Signup />} />
+
         <Route path="/me" element={<Account />} />
+        <Route path="/*" element={<HodRoutes />} />
+        <Route path="/GSO/*" element={<GsoRoutes />} />
+        <Route path="/director/*" element={<DirRoutes />} />
+
+        <Route path="*" element={<h1>Not Found !</h1>} />
       </Routes>
       <Footer />
     </Wrapper>

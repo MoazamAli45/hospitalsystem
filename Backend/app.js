@@ -16,10 +16,16 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 const app = express();
+
+const cookieParser = require("cookie-parser");
+
 // For showing on development
 app.use(morgan("dev"));
 
 app.use(express.json({ limit: "10kb" }));
+
+// to parse cookie
+app.use(cookieParser());
 
 //   without this you can login as {"$gt":""} with known password without signup
 app.use(mongoSanitize());

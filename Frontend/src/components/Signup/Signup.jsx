@@ -1,7 +1,12 @@
 import { Input, Button, Select, SelectItem } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiAccountCircleFill } from "react-icons/ri";
-
+import { useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { signup, reset } from "../../../store/authReducer";
+import { Spinner } from "@nextui-org/react";
+import "react-toastify/dist/ReactToastify.css";
 //  Departments
 const departments = [
   { name: "X Ray Dept", value: "x-ray" },
@@ -22,9 +27,70 @@ const departments = [
 ];
 
 export default function Signup() {
+  const nameRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+  const departmentRef = useRef();
+
+  const navigate = useNavigate();
+  //  redux toolkit
+
+  const dispatch = useDispatch();
+  const { isLoading, error, isAuth, user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    //   is Success
+    if (isAuth && user) {
+      toast.success("Logged In Successfully!");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+      //  dispatch(reset());
+    }
+
+    if (error) {
+      toast.error(error);
+    }
+
+    //  cleanup
+    return () => {
+      toast.dismiss();
+    };
+  }, [isAuth, user, dispatch, navigate, error]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const name = nameRef.current.value;
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+
+    const dep = departmentRef.current.value;
+    const department = departments[dep].value;
+    if (password !== confirmPassword) {
+      alert("Password do not match");
+      return;
+    }
+    const data = {
+      name,
+      password,
+      department,
+      confirmPassword,
+    };
+
+    // console.log(data);
+    dispatch(signup(data));
+
+    nameRef.current.value = "";
+    passwordRef.current.value = "";
+    confirmPasswordRef.current.value = "";
+    departmentRef.current.value = "";
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        (
+        <ToastContainer position="top-center" autoClose={2000} />)
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
             <RiAccountCircleFill className="text-primary text-[8rem]" />
@@ -33,15 +99,15 @@ export default function Signup() {
             Register your account
           </h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" method="POST">
+          <form className="space-y-6" method="POST " onSubmit={submitHandler}>
             <Input
               isRequired
               type="text"
               label="Name"
               placeholder="Enter Your Name"
               size="lg"
+              ref={nameRef}
               // className="max-w-xs"
             />
 
@@ -52,6 +118,7 @@ export default function Signup() {
                 label="Password"
                 placeholder="Enter Your Password"
                 size="lg"
+                ref={passwordRef}
                 // className="max-w-xs"
               />
             </div>
@@ -62,6 +129,7 @@ export default function Signup() {
                 label="Confirm Password"
                 placeholder="Enter Your Confirm Password"
                 size="lg"
+                ref={confirmPasswordRef}
                 // className="max-w-xs"
               />
             </div>
@@ -70,6 +138,7 @@ export default function Signup() {
                 label="Department"
                 placeholder="Select Your Department"
                 className="max-w-xs"
+                ref={departmentRef}
               >
                 {departments.map((dept, id) => (
                   <SelectItem key={id} value={dept.value}>
@@ -84,7 +153,13 @@ export default function Signup() {
                 className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 color="primary"
               >
-                Sign Up
+                {!isLoading && "Sign Up"}
+                {isLoading && (
+                  <span className="flex  items-center gap-[.5rem]">
+                    <Spinner color="white" size="sm" />
+                    <span>Submitting...</span>
+                  </span>
+                )}
               </Button>
             </div>
           </form>

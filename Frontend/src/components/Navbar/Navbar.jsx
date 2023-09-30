@@ -18,20 +18,30 @@ import {
 } from "@nextui-org/react";
 
 import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "../../../store/authReducer";
+import { useEffect } from "react";
 //   For url Path
 import { useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 export default function Navbar() {
+  const { user, isAuth } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      dispatch(getUser());
+    }
+
+    // }
+  }, [dispatch]);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
   const path = location.pathname;
 
   //  For navigate
   const navigate = useNavigate();
-
-  const isAuth = true;
 
   const menuItems = [
     { name: "Register Complaints", link: "/register-complaint" },
@@ -113,7 +123,10 @@ export default function Navbar() {
               <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">Head of Department</p>
+                  <p className="font-semibold">
+                    {user.role === "DEP" && "HOD"}
+                    {user.role !== "DEP" && user.role}
+                  </p>
                 </DropdownItem>
                 <DropdownItem key="settings" onClick={() => navigate("/me")}>
                   My Account

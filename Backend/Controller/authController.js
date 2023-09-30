@@ -27,6 +27,7 @@ const createdSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   // Sending  cookie
   res.cookie("jwt", token, cookieOptions);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
   //    so that password not send when signup or login
   user.password = undefined;
@@ -42,7 +43,8 @@ const createdSendToken = (user, statusCode, res) => {
 };
 
 //  Signup
-exports.sinup = catchAsync(async (req, res) => {
+exports.signup = catchAsync(async (req, res) => {
+  console.log("Signup", req.body);
   const user = await User.create(req.body);
 
   createdSendToken(user, 201, res);
@@ -66,6 +68,7 @@ exports.login = catchAsync(async (req, res) => {
 });
 //  Protect
 exports.protect = catchAsync(async (req, res, next) => {
+  // console.log("Protect", req);
   let token;
 
   if (
@@ -73,6 +76,9 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
+  } // now getting from cookies as in original web page
+  else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {

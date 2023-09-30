@@ -1,5 +1,14 @@
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { useEffect, useRef } from "react";
+import { updateMe, updatePassword, getUser } from "../../../store/authReducer";
+
+import { Spinner } from "@nextui-org/react";
+
+import "react-toastify/dist/ReactToastify.css";
+
 const departments = [
   { name: "X Ray Dept", value: "x-ray" },
   { name: "Emergency Dept", value: "emergency" },
@@ -18,21 +27,87 @@ const departments = [
   { name: "Surgical Dept", value: "surgical" },
 ];
 const Account = () => {
+  const nameRef = useRef();
+  const departmentRef = useRef();
+
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+  const dispatch = useDispatch();
+  const { user, error, updateProfile, updatePass, isLoading, loadingPass } =
+    useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getUser());
+
+    if (updateProfile) {
+      toast.success("Profile Updated Successfully!");
+    }
+    if (updatePass) {
+      toast.success("Password Updated Successfully!");
+    }
+    if (error) {
+      toast.error(error);
+    }
+
+    return () => {
+      toast.dismiss();
+    };
+  }, [dispatch, error, updateProfile, updatePass]);
+
+  // console.log(user);
+
+  const updateMeHandler = () => {
+    const name = nameRef.current.value;
+    const department = departmentRef.current.value;
+
+    const data = {
+      name,
+      department,
+    };
+
+    console.log(data);
+    dispatch(updateMe(data));
+
+    nameRef.current.value = "";
+    departmentRef.current.value = "";
+  };
+
+  const updatePasswordHandler = () => {
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+
+    const data = {
+      password,
+      confirmPassword,
+    };
+
+    console.log(data);
+    dispatch(updatePassword(data));
+
+    passwordRef.current.value = "";
+    confirmPasswordRef.current.value = "";
+  };
   return (
     <div className="my-[3rem]">
+      <ToastContainer position="top-center" autoClose={2000} />
       <h1 className="text-primary font-bold text-3xl">Your Account Settings</h1>
       <div className="flex flex-col gap-[1rem] my-[1rem]">
         <div className="flex flex-col md:flex-row gap-4 my-[1rem] ">
           <Input
             type="text"
             label="Name"
-            defaultValue={"Ali"}
+            // defaultValue={user?.name}
+            defaultValue={user?.name}
+            placeholder={user?.name}
             className="max-w-[30rem]"
+            ref={nameRef}
           />
           <Select
             label="Department"
             placeholder="Select Department"
             className="max-w-[30rem]"
+            textValue={user?.department}
+            ref={departmentRef}
           >
             {departments.map((item) => (
               <SelectItem key={item.value} value={item.value}>
@@ -45,9 +120,18 @@ const Account = () => {
           className="
         max-w-[20rem] justify-end self-end"
         >
-          <Button color="primary" className=" ">
-            Update Settings
-          </Button>
+          {!isLoading && (
+            <Button color="primary" className=" " onClick={updateMeHandler}>
+              Update Settings
+            </Button>
+          )}
+          {isLoading && (
+            <Button color="primary">
+              <span className="flex items-center gap-[.5rem]">
+                <Spinner color="white" size="sm" /> <span>Submitting ...</span>
+              </span>
+            </Button>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-[1rem] my-[2rem]">
@@ -55,23 +139,36 @@ const Account = () => {
           <Input
             type="password"
             label="Password"
-            defaultValue={"Ali"}
             className="max-w-[30rem]"
+            ref={passwordRef}
           />
           <Input
             type="password"
             label="Confrim Password"
-            defaultValue={"Ali"}
             className="max-w-[30rem]"
+            ref={confirmPasswordRef}
           />
         </div>
         <div
           className="
         max-w-[20rem] justify-end self-end"
         >
-          <Button color="danger" className=" ">
-            Update Password
-          </Button>
+          {!loadingPass && (
+            <Button
+              color="danger"
+              className=" "
+              onClick={updatePasswordHandler}
+            >
+              Update Password
+            </Button>
+          )}
+          {loadingPass && (
+            <Button color="danger">
+              <span className="flex items-center gap-[.5rem]">
+                <Spinner color="white" size="sm" /> <span>Submitting ...</span>
+              </span>
+            </Button>
+          )}
         </div>
       </div>
     </div>

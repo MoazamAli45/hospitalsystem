@@ -5,7 +5,7 @@ const authController = require("../Controller/authController");
 const userController = require("../Controller/userController");
 
 router.post("/auth/login", authController.login);
-router.post("/auth/signup", authController.sinup);
+router.post("/auth/signup", authController.signup);
 
 router.use(authController.protect);
 
@@ -15,4 +15,7 @@ router.patch("/updateMe", userController.updateMe);
 
 //  for updating password
 router.patch("/updateMyPassword", authController.updatePassword);
+
+router.get("/logout", authController.logout);
+
 module.exports = router;
