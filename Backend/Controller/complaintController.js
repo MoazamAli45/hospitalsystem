@@ -13,7 +13,7 @@ exports.createComplaint = catchAsync(async (req, res) => {
 });
 
 exports.getPendingComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "pending" });
+  const complaints = await Complaint.find({ status: "PENDING" });
 
   res.status(200).json({
     status: "success",
@@ -25,7 +25,18 @@ exports.getPendingComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getCompletedComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "completed" });
+  const complaints = await Complaint.find({ status: "COMPLETED" });
+
+  res.status(200).json({
+    status: "success",
+    total: complaints.length,
+    data: {
+      complaints,
+    },
+  });
+});
+exports.getInProgressComplaints = catchAsync(async (req, res) => {
+  const complaints = await Complaint.find({ status: "INPROGRESS" });
 
   res.status(200).json({
     status: "success",

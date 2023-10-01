@@ -12,6 +12,7 @@ import Account from "./components/Account/Account";
 import HodRoutes from "./components/Routes/HodRoutes";
 import DirRoutes from "./components/Routes/DirRoutes";
 import GsoRoutes from "./components/Routes/GsoRoutes";
+import ProtectedRoutes from "./components/Routes/ProtectedRoutes";
 
 function App() {
   return (
@@ -21,12 +22,12 @@ function App() {
         <Route path="/" element={<Hero />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
         <Route path="/me" element={<Account />} />
-        <Route path="/*" element={<HodRoutes />} />
-        <Route path="/GSO/*" element={<GsoRoutes />} />
-        <Route path="/director/*" element={<DirRoutes />} />
-
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/*" element={<HodRoutes />} />
+          <Route path="/GSO/*" element={<GsoRoutes />} />
+          <Route path="/director/*" element={<DirRoutes />} />
+        </Route>
         <Route path="*" element={<h1>Not Found !</h1>} />
       </Routes>
       <Footer />

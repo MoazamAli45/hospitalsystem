@@ -39,7 +39,7 @@ export default function AllocateComplaints() {
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"
-          className="min-h-[320px]"
+          className="min-h-[320px] lg:w-[105%] "
         >
           <TableHeader>
             <TableColumn className="text-primary">Dept</TableColumn>

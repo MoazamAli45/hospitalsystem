@@ -10,6 +10,7 @@ const initialState = {
   updateProfile: false,
   loadingPass: false,
   updatePass: false,
+  loadingProf: false,
 };
 
 export const signup = createAsyncThunk(
@@ -20,7 +21,7 @@ export const signup = createAsyncThunk(
         `${API_URL}/api/v1/users/auth/signup`,
         data
       );
-      console.log(user.data);
+      // console.log(user.data);
       localStorage.setItem("jwt", user.data.token);
       return user.data;
     } catch (error) {
@@ -52,17 +53,9 @@ export const updateMe = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (data, thunkApi) => {
-    try {
-      const user = await api.get("/api/v1/users/logout");
-      return user.data;
-    } catch (err) {
-      return thunkApi.rejectWithValue(err.response.data);
-    }
-  }
-);
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await localStorage.removeItem("jwt");
+});
 export const updatePassword = createAsyncThunk(
   "auth/updatePassword",
   async (data, thunkApi) => {
@@ -80,7 +73,7 @@ export const getUser = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       const user = await api.get("/api/v1/users/me");
-      console.log(user.data);
+      // console.log(user.data);
       return user.data;
     } catch (err) {
       return thunkApi.rejectWithValue(err.response.data);
@@ -93,7 +86,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.updateMe = false;
+      state.updateProfile = false;
       state.updatePass = false;
     },
   },
@@ -136,7 +129,7 @@ const authSlice = createSlice({
     });
     builder.addCase(logout.rejected, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload.message;
+      state.error = "Something went wrong";
     });
 
     //  update password
@@ -161,17 +154,17 @@ const authSlice = createSlice({
 
     //  update Me
     builder.addCase(updateMe.pending, (state) => {
-      state.isLoading = true;
+      state.loadingProf = true;
     });
     builder.addCase(updateMe.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
+      state.loadingProf = false;
       state.isAuth = true;
       state.user = payload.data.user;
       state.updateProfile = true;
       state.error = "";
     });
     builder.addCase(updateMe.rejected, (state, { payload }) => {
-      state.isLoading = false;
+      state.loadingProf = false;
       state.error = payload.message;
     });
 

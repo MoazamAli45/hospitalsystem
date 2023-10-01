@@ -5,15 +5,35 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Button,
   Chip,
 } from "@nextui-org/react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { getCompletedComplaints } from "../../../store/complaintReducer";
+import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CompletedJobs() {
+  const dispatch = useDispatch();
+  const { complaints, isLoading, error } = useSelector(
+    (state) => state.complaint
+  );
+
+  useEffect(() => {
+    dispatch(getCompletedComplaints());
+
+    if (error) {
+      toast.error(error);
+    }
+    () => {
+      toast.dismiss();
+    };
+  }, [dispatch, error]);
+
   return (
     <div className="my-[2rem]">
       <h1 className="text-3xl font-bold text-center my-[1rem]">
-        View Complaints
+        Completed Jobs
       </h1>
       <div className="flex flex-col gap-3">
         <Table
@@ -40,49 +60,44 @@ export default function CompletedJobs() {
             </TableColumn>
           </TableHeader>
           <TableBody>
-            <TableRow key="1">
-              <TableCell>Eye</TableCell>
-              <TableCell>Ali</TableCell>
-              <TableCell>Beds</TableCell>
-              <TableCell>29-07-23</TableCell>
-              <TableCell>furniture</TableCell>
-              <TableCell>1000</TableCell>
-              <TableCell>Urgent</TableCell>
+            {complaints.map((complaint, id) => (
+              <TableRow key={id}>
+                <TableCell>{complaint?.department}</TableCell>
+                <TableCell>{complaint?.hod}</TableCell>
+                <TableCell>{complaint?.jobDesc}</TableCell>
+                <TableCell>
+                  {new Date(complaint?.dateOfReq).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell>{complaint?.natureOfJob}</TableCell>
+                <TableCell>{complaint?.estimatedCost}</TableCell>
+                <TableCell>{complaint?.urgency}</TableCell>
 
-              <TableCell>Ahmed</TableCell>
-              <TableCell>
-                <Chip
-                  color="success"
-                  className="capitalize text-white"
-                  size="sm"
-                >
-                  Completed
-                </Chip>
-              </TableCell>
-              <TableCell>29-07-23</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Dental</TableCell>
-              <TableCell>Ali</TableCell>
-              <TableCell>Beds</TableCell>
-              <TableCell>29-07-23</TableCell>
-              <TableCell>furniture</TableCell>
-              <TableCell>1000</TableCell>
-              <TableCell>Urgent</TableCell>
-
-              <TableCell>Ahmed</TableCell>
-              <TableCell>
-                {" "}
-                <Chip
-                  color="success"
-                  className="capitalize text-white"
-                  size="sm"
-                >
-                  Completed
-                </Chip>
-              </TableCell>
-              <TableCell>28-09-23</TableCell>
-            </TableRow>
+                <TableCell>{complaint?.allocatedTo}</TableCell>
+                <TableCell>
+                  <Chip
+                    color="success"
+                    className="capitalize text-white"
+                    size="sm"
+                  >
+                    {complaint?.status}
+                  </Chip>
+                </TableCell>
+                <TableCell>
+                  {new Date(complaint?.dateOfCompletion).toLocaleDateString(
+                    "en-US",
+                    {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

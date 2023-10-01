@@ -30,7 +30,7 @@ const complaintSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "pending",
+    default: "PENDING",
   },
   allocatedTo: {
     type: String,

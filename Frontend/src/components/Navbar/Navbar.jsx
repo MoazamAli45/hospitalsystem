@@ -19,11 +19,13 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../../../store/authReducer";
+import { getUser, logout } from "../../../store/authReducer";
 import { useEffect } from "react";
 //   For url Path
 import { useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Navbar() {
   const { user, isAuth } = useSelector((state) => state.auth);
@@ -42,16 +44,32 @@ export default function Navbar() {
 
   //  For navigate
   const navigate = useNavigate();
+  let menuItems = [];
+  if (user?.role === "DEP")
+    menuItems = [
+      { name: "Register Complaints", link: "/register-complaint" },
+      { name: "View Complaints", link: "/view-complaint" },
+      { name: "Completed Jobs", link: "/completed-jobs" },
+    ];
 
-  const menuItems = [
-    { name: "Register Complaints", link: "/register-complaint" },
-    { name: "View Complaints", link: "/view-complaint" },
-    { name: "Completed Jobs", link: "/completed-jobs" },
-    { name: "Login", link: "/login" },
-  ];
+  if (user?.role === "GSO")
+    menuItems = [
+      { name: "Allocate Complaints", link: "/gso/allocate-complaints" },
+    ];
 
+  if (user?.role === "DIR")
+    menuItems = [{ name: "All Complaints", link: "/director/all-complaints" }];
+
+  const logoutHandler = () => {
+    dispatch(logout()).then(() => {
+      toast.success("Logged Out Successfully!");
+    });
+    navigate("/");
+  };
+  console.log(path);
   return (
     <NextNavbar onMenuOpenChange={setIsMenuOpen} className="bg-transparent">
+      <ToastContainer position="top-center" autoClose={2000} />
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -64,30 +82,61 @@ export default function Navbar() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link
-            color={`${path !== "/register-complaint" ? "foreground" : ""}`}
-            href="/register-complaint"
-          >
-            Register Complaint
-          </Link>
+          {user?.role === "DEP" && (
+            <Link
+              color={`${path !== "/register-complaint" ? "foreground" : ""}`}
+              href="/register-complaint"
+            >
+              Register Complaint
+            </Link>
+          )}
         </NavbarItem>
         <NavbarItem>
-          <Link
-            href="/view-complaint"
-            aria-current="page"
-            color={`${path !== "/view-complaint" ? "foreground" : ""}`}
-          >
-            View Complaints
-          </Link>
+          {user?.role === "DEP" && (
+            <Link
+              href="/view-complaint"
+              aria-current="page"
+              color={`${path !== "/view-complaint" ? "foreground" : ""}`}
+            >
+              View Complaints
+            </Link>
+          )}
         </NavbarItem>
-        <NavbarItem>
-          <Link
-            color={`${path !== "/completed-jobs" ? "foreground" : ""}`}
-            href="/completed-jobs"
-          >
-            Completed Jobs
-          </Link>
-        </NavbarItem>
+        {user?.role === "DEP" && (
+          <NavbarItem>
+            <Link
+              color={`${path !== "/completed-jobs" ? "foreground" : ""}`}
+              href="/completed-jobs"
+            >
+              Completed Jobs
+            </Link>
+          </NavbarItem>
+        )}
+
+        {user?.role === "GSO" && (
+          <NavbarItem>
+            <Link
+              color={`${
+                path !== "/gso/allocate-complaints" ? "foreground" : ""
+              }`}
+              href="/gso/allocate-complaints"
+            >
+              Allocate Complaints
+            </Link>
+          </NavbarItem>
+        )}
+        {user?.role === "DIR" && (
+          <NavbarItem>
+            <Link
+              color={`${
+                path !== "/director/all-complaints" ? "foreground" : ""
+              }`}
+              href="/director/all-complaints"
+            >
+              All Complaints
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         {!isAuth && (
@@ -109,7 +158,7 @@ export default function Navbar() {
                 <Avatar
                   as="button"
                   className="transition-transform text-white text-[1.2rem] text-center"
-                  name="JS"
+                  name={user?.name[0].toUpperCase()}
                   color="primary"
                   size="md"
                   // icon={
@@ -125,14 +174,19 @@ export default function Navbar() {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">
                     {user.role === "DEP" && "HOD"}
-                    {user.role !== "DEP" && user.role}
+                    {user.role === "GSO" && "GSO"}
+                    {user.role === "DIR" && "Director"}
                   </p>
                 </DropdownItem>
                 <DropdownItem key="settings" onClick={() => navigate("/me")}>
                   My Account
                 </DropdownItem>
 
-                <DropdownItem key="logout" color="danger">
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  onClick={logoutHandler}
+                >
                   Log Out
                 </DropdownItem>
               </DropdownMenu>

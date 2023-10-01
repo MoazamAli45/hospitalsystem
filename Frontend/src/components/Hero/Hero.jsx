@@ -1,6 +1,11 @@
 import { Button } from "@nextui-org/react";
 import home from "../../assets/hospital.jpg";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export default function Hero() {
+  const navigate = useNavigate();
+  const { isAuth } = useSelector((state) => state.auth);
+
   return (
     <div className="bg-var(--softBg)">
       {" "}
@@ -43,12 +48,15 @@ export default function Hero() {
               Malesuada adipiscing sagittis vel nulla.
             </p>  */}
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-              <Button
-                color="primary"
-                className="px-20 py-5 text-base font-medium rounded-full"
-              >
-                Login
-              </Button>
+              {!isAuth && (
+                <Button
+                  color="primary"
+                  className="px-20 py-5 text-base font-medium rounded-full"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+              )}
             </div>
           </div>
           <div className="relative mt-16 h-80 lg:mt-8">
