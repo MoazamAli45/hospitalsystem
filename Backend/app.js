@@ -35,18 +35,8 @@ app.use(xss());
 
 app.use(helmet());
 
-// app.use(cors());
-// app.options("*", cors());
-
-const corsOptions = {
-  origin: "https://hospitalsystem-two.vercel.app",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.use(cors());
+app.options("*", cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({
