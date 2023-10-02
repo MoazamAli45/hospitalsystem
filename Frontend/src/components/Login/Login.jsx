@@ -89,6 +89,9 @@ export default function Login() {
                 ref={passwordRef}
                 // className="max-w-xs"
               />
+              <p className="mt-2 text-sm text-red-500 mx-2">
+                Password must be at least 8 characters long.
+              </p>
             </div>
 
             <div>

@@ -167,13 +167,30 @@ export default function ViewInProgressComplaint() {
 
                 <TableCell>{complaint?.allocatedTo}</TableCell>
                 <TableCell>
-                  <Chip
-                    color="warning"
-                    className="capitalize text-white"
-                    size="sm"
+                  <span
+                    className={`${
+                      complaint?.status === "INPROGRESS"
+                        ? "flex flex-col gap-2"
+                        : ""
+                    }`}
                   >
-                    {complaint?.status}
-                  </Chip>
+                    <Chip
+                      color="warning"
+                      className="capitalize text-white"
+                      size="sm"
+                    >
+                      {complaint?.status}
+                    </Chip>
+                    {complaint?.status === "INPROGRESS" && (
+                      <Button
+                        variant="bordered"
+                        color="warning"
+                        onPress={() => openModalWithId(complaint?._id)}
+                      >
+                        Update
+                      </Button>
+                    )}
+                  </span>
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>

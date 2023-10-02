@@ -116,7 +116,7 @@ export default function AllocateComplaints() {
                 key={id}
                 className={`${
                   new Date().toDateString() ===
-                    new Date(complaint?.dateOfReq).toDateString() || id === 1
+                    new Date(complaint?.dateOfReq).toDateString() || id === 0
                     ? "bg-red-200 "
                     : ""
                 }`}

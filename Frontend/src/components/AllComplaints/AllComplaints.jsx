@@ -74,7 +74,7 @@ export default function AllComplaints() {
                     complaint?.urgency === "urgent" ? "text-danger" : ""
                   }`}
                 >
-                  {id}
+                  {id + 1}
                 </TableCell>
                 <TableCell
                   className={`${
@@ -144,7 +144,11 @@ export default function AllComplaints() {
                 >
                   <Chip
                     color={`${
-                      complaint?.status === "INPROGRESS" ? "warning" : "success"
+                      complaint?.status === "INPROGRESS"
+                        ? "warning"
+                        : complaint?.status === "COMPLETED"
+                        ? "success"
+                        : "danger"
                     }`}
                     className="capitalize text-white"
                     size="sm"
