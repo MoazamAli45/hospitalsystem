@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import {
   Table,
   TableHeader,
@@ -8,42 +6,44 @@ import {
   TableRow,
   TableCell,
   Button,
-  Input,
+  Spinner,
+  Chip,
 } from "@nextui-org/react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Radio,
-  RadioGroup,
-} from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+
+import { getAllComplaints } from "../../../store/complaintReducer";
+import { useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector, useDispatch } from "react-redux";
 export default function AllComplaints() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { complaints, isLoading, error } = useSelector(
+    (state) => state.complaint
+  );
 
-  const openModalWithId = (id) => {
-    setSelectedId(id);
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    dispatch(getAllComplaints());
+  }, [dispatch]);
 
-  const closeModal = () => {
-    setSelectedId(null); // Reset the selected ID when the modal is closed
-    setIsModalOpen(false);
-  };
+  if (error) {
+    toast.error(error);
+  }
 
   return (
     <div className="my-[2rem]">
+      <ToastContainer position="top-center" autoClose={2000} />
       <h1 className="text-3xl font-bold text-center my-[1rem]">
         All Complaints
       </h1>
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"
-          className="min-h-[320px]"
+          className="min-h-[320px] lg:w-[110%] "
         >
           <TableHeader>
+            <TableColumn className="text-primary">Sr</TableColumn>
             <TableColumn className="text-primary">Dept</TableColumn>
             <TableColumn className="text-primary">HOD</TableColumn>
             <TableColumn className="text-primary">Job Description</TableColumn>
@@ -63,95 +63,123 @@ export default function AllComplaints() {
             </TableColumn>
             <TableColumn className="text-primary">View</TableColumn>
           </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>Eye</TableCell>
-              <TableCell>Ali</TableCell>
-              <TableCell>Beds</TableCell>
-              <TableCell>29-07-23</TableCell>
-              <TableCell>furniture</TableCell>
-              <TableCell>1000</TableCell>
-              <TableCell>Urgent</TableCell>
-
-              <TableCell>Ahmed</TableCell>
-              <TableCell>Completed</TableCell>
-              <TableCell>29-09-23</TableCell>
-              <TableCell>
-                <Button
-                  color="success"
-                  variant="flat"
-                  onPress={openModalWithId}
+          <TableBody
+            isLoading={isLoading}
+            loadingContent={<Spinner label="Loading..." />}
+          >
+            {complaints.map((complaint, id) => (
+              <TableRow key={id}>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
                 >
-                  view
-                </Button>
-              </TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Dental</TableCell>
-              <TableCell>Ali</TableCell>
-              <TableCell>Beds</TableCell>
-              <TableCell>29-07-23</TableCell>
-              <TableCell>furniture</TableCell>
-              <TableCell>1000</TableCell>
-              <TableCell>General</TableCell>
-
-              <TableCell>Ahmed</TableCell>
-              <TableCell>Completed</TableCell>
-              <TableCell>29-07-23</TableCell>
-              <TableCell>
-                <Button
-                  color="success"
-                  variant="flat"
-                  onPress={openModalWithId}
+                  {id}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
                 >
-                  view
-                </Button>
-              </TableCell>
-            </TableRow>
+                  {complaint?.department}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.hod}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.jobDesc}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {new Date(complaint?.dateOfReq).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.natureOfJob}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.estimatedCost}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.urgency}
+                </TableCell>
+
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {complaint?.allocatedTo}
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  <Chip
+                    color={`${
+                      complaint?.status === "INPROGRESS" ? "warning" : "success"
+                    }`}
+                    className="capitalize text-white"
+                    size="sm"
+                  >
+                    {complaint?.status}
+                  </Chip>
+                </TableCell>
+                <TableCell
+                  className={`${
+                    complaint?.urgency === "urgent" ? "text-danger" : ""
+                  }`}
+                >
+                  {new Date(complaint?.dateOfCompletion).toLocaleDateString(
+                    "en-US",
+                    {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    color="success"
+                    variant="flat"
+                    onClick={() => navigate(`/director/${complaint?._id}`)}
+                  >
+                    view
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onOpenChange={closeModal}
-        placement="top-center"
-      >
-        <ModalContent>
-          {(closeModal) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Select Status of Job
-              </ModalHeader>
-              <ModalBody>
-                <div className="flex  gap-[3rem]  items-center mx-[1rem] ">
-                  <label className="font-bold w-[18%] max-w-[full]">
-                    Status of Job
-                  </label>
-                  <RadioGroup orientation="horizontal">
-                    <Radio value="urgent" color="success">
-                      In progress
-                    </Radio>
-                    <Radio value="general" color="success">
-                      Completed
-                    </Radio>
-                  </RadioGroup>
-                </div>
-                <div className="flex  gap-[3rem]  items-center mx-[1rem] ">
-                  <label className="font-bold w-[18%] max-w-[full]">
-                    Date of Completion
-                  </label>
-                  <Input type="date" placeholder="Enter Date of Completion" />
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={closeModal}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
     </div>
   );
 }

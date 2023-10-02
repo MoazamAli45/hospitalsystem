@@ -76,7 +76,7 @@ const Account = () => {
       department,
     };
 
-    console.log(data);
+    // console.log(data);
     dispatch(updateMe(data));
     dispatch(reset());
 

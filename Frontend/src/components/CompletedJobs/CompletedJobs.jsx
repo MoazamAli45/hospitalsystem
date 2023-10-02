@@ -6,6 +6,7 @@ import {
   TableRow,
   TableCell,
   Chip,
+  Spinner,
 } from "@nextui-org/react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
@@ -32,6 +33,7 @@ export default function CompletedJobs() {
 
   return (
     <div className="my-[2rem]">
+      <ToastContainer position="top-center" autoClose={2000} />
       <h1 className="text-3xl font-bold text-center my-[1rem]">
         Completed Jobs
       </h1>
@@ -59,7 +61,10 @@ export default function CompletedJobs() {
               Date of Completion{" "}
             </TableColumn>
           </TableHeader>
-          <TableBody>
+          <TableBody
+            isLoading={isLoading}
+            loadingContent={<Spinner label="Loading..." />}
+          >
             {complaints.map((complaint, id) => (
               <TableRow key={id}>
                 <TableCell>{complaint?.department}</TableCell>

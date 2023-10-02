@@ -66,7 +66,7 @@ export default function Navbar() {
     });
     navigate("/");
   };
-  console.log(path);
+  // console.log(path);
   return (
     <NextNavbar onMenuOpenChange={setIsMenuOpen} className="bg-transparent">
       <ToastContainer position="top-center" autoClose={2000} />

@@ -9,6 +9,7 @@ const initialState = {
   error: "",
   update: false,
   loadingUpdate: false,
+  inProgComplaints: [],
 };
 
 export const createComplaint = createAsyncThunk(
@@ -16,7 +17,7 @@ export const createComplaint = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       const complaint = await api.post("/api/v1/complaints", data);
-      console.log(complaint.data);
+      // console.log(complaint.data);
       return complaint.data;
     } catch (err) {
       return thunkApi.rejectWithValue(err.response.data);
@@ -29,7 +30,7 @@ export const getAllComplaints = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       const complaints = await api.get("/api/v1/complaints");
-      console.log(complaints.data);
+      // console.log(complaints.data);
       return complaints.data;
     } catch (err) {
       return thunkApi.rejectWithValue(err.response.data);
@@ -79,6 +80,21 @@ export const getCompletedComplaints = createAsyncThunk(
   }
 );
 
+export const getInprogressComplaints = createAsyncThunk(
+  "complaint/getInprogressComplaints",
+  async (data, thunkApi) => {
+    try {
+      const complaints = await api.get(
+        "/api/v1/complaints/inprogress-complaints"
+      );
+
+      return complaints.data;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  }
+);
+
 //  Get one complaint
 export const getComplaint = createAsyncThunk(
   "complaint/getcomplaint",
@@ -101,7 +117,7 @@ export const updateComplaint = createAsyncThunk(
         `/api/v1/complaints/${data.id}`,
         data.data
       );
-      console.log(complaint.data);
+      // console.log(complaint.data);
       return complaint.data;
     } catch (err) {
       return thunkApi.rejectWithValue(err.response.data);
@@ -179,6 +195,18 @@ const complaintSlice = createSlice({
       state.error = "";
     });
     builder.addCase(getCompletedComplaints.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload.message;
+    });
+    builder.addCase(getInprogressComplaints.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getInprogressComplaints.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.inProgComplaints = payload.data.complaints;
+      state.error = "";
+    });
+    builder.addCase(getInprogressComplaints.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload.message;
     });

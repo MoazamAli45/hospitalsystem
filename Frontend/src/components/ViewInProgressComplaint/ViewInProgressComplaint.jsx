@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   Table,
@@ -23,16 +23,23 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import {
+  getInprogressComplaints,
   getPendingComplaints,
   updateComplaint,
 } from "../../../store/complaintReducer";
 import "react-toastify/dist/ReactToastify.css";
+import { Chip } from "@nextui-org/react";
 
 export default function ViewInProgressComplaint() {
   const dispatch = useDispatch();
-  const { complaints, isLoading, error, loadingUpdate, update } = useSelector(
-    (state) => state.complaint
-  );
+  const {
+    complaints,
+    isLoading,
+    error,
+    loadingUpdate,
+    update,
+    inProgComplaints,
+  } = useSelector((state) => state.complaint);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
@@ -41,12 +48,16 @@ export default function ViewInProgressComplaint() {
 
   useEffect(() => {
     dispatch(getPendingComplaints());
+    dispatch(getInprogressComplaints());
 
     if (update) {
       toast.success("Complaint Updated Successfully");
     }
   }, [dispatch, update]);
   // console.log(complaints);
+
+  // console.log(inProgComplaints);
+
   const openModalWithId = (id) => {
     setSelectedId(id);
     setIsModalOpen(true);
@@ -69,7 +80,7 @@ export default function ViewInProgressComplaint() {
       data: { dateOfCompletion, status },
     };
 
-    console.log(data);
+    // console.log(data);
     dispatch(updateComplaint(data));
     closeModal();
   };
@@ -125,7 +136,7 @@ export default function ViewInProgressComplaint() {
                 <TableCell>{complaint?.estimatedCost}</TableCell>
                 <TableCell>{complaint?.urgency}</TableCell>
 
-                <TableCell>Ahmed</TableCell>
+                <TableCell>{complaint?.allocatedTo}</TableCell>
                 <TableCell>
                   <Button
                     variant="bordered"
@@ -134,6 +145,35 @@ export default function ViewInProgressComplaint() {
                   >
                     Update
                   </Button>
+                </TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            ))}
+            {inProgComplaints.map((complaint, id) => (
+              <TableRow key={id}>
+                <TableCell>{complaint?.department}</TableCell>
+                <TableCell>{complaint?.hod}</TableCell>
+                <TableCell>{complaint?.jobDesc}</TableCell>
+                <TableCell>
+                  {new Date(complaint?.dateOfReq).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell>{complaint?.natureOfJob}</TableCell>
+                <TableCell>{complaint?.estimatedCost}</TableCell>
+                <TableCell>{complaint?.urgency}</TableCell>
+
+                <TableCell>{complaint?.allocatedTo}</TableCell>
+                <TableCell>
+                  <Chip
+                    color="warning"
+                    className="capitalize text-white"
+                    size="sm"
+                  >
+                    {complaint?.status}
+                  </Chip>
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>
