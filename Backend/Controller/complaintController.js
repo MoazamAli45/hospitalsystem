@@ -60,7 +60,9 @@ exports.getAllComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getAllocateComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ allocatedTo: "none" });
+  const complaints = await Complaint.find({ allocatedTo: "none" }).sort(
+    "dateOfReq"
+  );
 
   res.status(200).json({
     status: "success",
