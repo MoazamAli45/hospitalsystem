@@ -13,7 +13,9 @@ exports.createComplaint = catchAsync(async (req, res) => {
 });
 
 exports.getPendingComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "PENDING" });
+  const complaints = await Complaint.find({ status: "PENDING" }).sort({
+    dateOfReq: -1,
+  });
 
   res.status(200).json({
     status: "success",
@@ -25,7 +27,9 @@ exports.getPendingComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getCompletedComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "COMPLETED" });
+  const complaints = await Complaint.find({ status: "COMPLETED" }).sort({
+    dateOfReq: -1,
+  });
 
   res.status(200).json({
     status: "success",
@@ -36,7 +40,9 @@ exports.getCompletedComplaints = catchAsync(async (req, res) => {
   });
 });
 exports.getInProgressComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "INPROGRESS" });
+  const complaints = await Complaint.find({ status: "INPROGRESS" }).sort({
+    dateOfReq: -1,
+  });
 
   res.status(200).json({
     status: "success",
@@ -48,7 +54,7 @@ exports.getInProgressComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getAllComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find().sort("dateOfReq");
+  const complaints = await Complaint.find().sort({ dateOfReq: -1 });
 
   res.status(200).json({
     status: "success",
@@ -60,9 +66,9 @@ exports.getAllComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getAllocateComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ allocatedTo: "none" }).sort(
-    "dateOfReq"
-  );
+  const complaints = await Complaint.find({ allocatedTo: "none" }).sort({
+    dateOfReq: -1,
+  });
 
   res.status(200).json({
     status: "success",

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Table,
@@ -44,7 +44,13 @@ export default function ViewInProgressComplaint() {
   const [selectedId, setSelectedId] = useState("");
 
   const [selectStatus, setSelectStatus] = useState("");
-  const completionDateRef = useRef();
+  const [defaultDate, setDefaultDate] = useState(getFormattedDate());
+
+  // Function to get the formatted date in YYYY-MM-DD
+  function getFormattedDate() {
+    const currentDate = new Date();
+    return currentDate.toISOString().split("T")[0];
+  }
 
   useEffect(() => {
     dispatch(getPendingComplaints());
@@ -72,7 +78,7 @@ export default function ViewInProgressComplaint() {
   }
 
   const updateHandler = () => {
-    const dateOfCompletion = completionDateRef.current.value;
+    const dateOfCompletion = defaultDate;
     const status = selectStatus;
     const id = selectedId;
     const data = {
@@ -239,7 +245,8 @@ export default function ViewInProgressComplaint() {
                   <Input
                     type="date"
                     placeholder="Enter Date of Completion"
-                    ref={completionDateRef}
+                    value={defaultDate}
+                    onChange={(e) => setDefaultDate(e.target.value)}
                   />
                 </div>
               </ModalBody>

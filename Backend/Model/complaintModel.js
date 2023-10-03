@@ -38,6 +38,7 @@ const complaintSchema = new mongoose.Schema({
   },
   dateOfCompletion: {
     type: Date,
+    default: Date.now,
   },
 });
 

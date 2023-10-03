@@ -13,10 +13,17 @@ const RegisterComplaint = () => {
   const departmentRef = useRef();
   const hodRef = useRef();
   const jobRef = useRef();
-  const dateRef = useRef();
+
   const natureRef = useRef();
   const costRef = useRef();
   const [selectedUrgency, setSelectedUrgency] = useState("general");
+  const [defaultDate, setDefaultDate] = useState(getFormattedDate());
+
+  // Function to get the formatted date in YYYY-MM-DD
+  function getFormattedDate() {
+    const currentDate = new Date();
+    return currentDate.toISOString().split("T")[0];
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -24,7 +31,7 @@ const RegisterComplaint = () => {
     const department = departmentRef.current.value;
     const hod = hodRef.current.value;
     const jobDesc = jobRef.current.value;
-    const dateOfReq = dateRef.current.value;
+    const dateOfReq = defaultDate;
     const natureOfJob = natureRef.current.value;
     const estimatedCost = +costRef.current.value;
     const urgency = selectedUrgency;
@@ -39,7 +46,7 @@ const RegisterComplaint = () => {
       urgency,
     };
 
-    console.log(data);
+    // console.log(data);
     dispatch(createComplaint(data)).then(() => {
       toast.success("Complaint Registered Successfully");
     });
@@ -47,7 +54,6 @@ const RegisterComplaint = () => {
     departmentRef.current.value = "";
     hodRef.current.value = "";
     jobRef.current.value = "";
-    dateRef.current.value = "";
 
     natureRef.current.value = "";
     costRef.current.value = "";
@@ -106,7 +112,8 @@ const RegisterComplaint = () => {
             type="date"
             placeholder="Enter Date"
             className="max-w-[30rem]"
-            ref={dateRef}
+            value={defaultDate}
+            onChange={(e) => setDefaultDate(e.target.value)}
           />
         </div>
         <div className="flex  gap-[3rem]  items-center mx-[1rem] ">

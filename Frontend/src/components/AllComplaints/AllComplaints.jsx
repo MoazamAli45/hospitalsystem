@@ -27,6 +27,7 @@ export default function AllComplaints() {
     dispatch(getAllComplaints());
   }, [dispatch]);
 
+  console.log(complaints);
   if (error) {
     toast.error(error);
   }
@@ -68,80 +69,30 @@ export default function AllComplaints() {
             loadingContent={<Spinner label="Loading..." />}
           >
             {complaints.map((complaint, id) => (
-              <TableRow key={id}>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {id + 1}
+              <TableRow
+                key={id}
+                className={`${
+                  complaint?.urgency === "urgent" ? "bg-red-200" : ""
+                }`}
+              >
+                <TableCell>{id + 1}</TableCell>
+                <TableCell>{complaint?.department}</TableCell>
+                <TableCell>{complaint?.hod}</TableCell>
+                <TableCell>{complaint?.jobDesc}</TableCell>
+                <TableCell>
+                  {complaint?.dateOfReq !== "" &&
+                    new Date(complaint?.dateOfReq).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
                 </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.department}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.hod}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.jobDesc}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {new Date(complaint?.dateOfReq).toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.natureOfJob}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.estimatedCost}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.urgency}
-                </TableCell>
+                <TableCell>{complaint?.natureOfJob}</TableCell>
+                <TableCell>{complaint?.estimatedCost}</TableCell>
+                <TableCell>{complaint?.urgency}</TableCell>
 
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {complaint?.allocatedTo}
-                </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
+                <TableCell>{complaint?.allocatedTo}</TableCell>
+                <TableCell>
                   <Chip
                     color={`${
                       complaint?.status === "INPROGRESS"
@@ -156,19 +107,16 @@ export default function AllComplaints() {
                     {complaint?.status}
                   </Chip>
                 </TableCell>
-                <TableCell
-                  className={`${
-                    complaint?.urgency === "urgent" ? "text-danger" : ""
-                  }`}
-                >
-                  {new Date(complaint?.dateOfCompletion).toLocaleDateString(
-                    "en-US",
-                    {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    }
-                  )}
+                <TableCell>
+                  {complaint?.dateOfCompletion &&
+                    new Date(complaint?.dateOfCompletion).toLocaleDateString(
+                      "en-US",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )}
                 </TableCell>
                 <TableCell>
                   <Button

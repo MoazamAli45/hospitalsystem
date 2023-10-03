@@ -153,13 +153,17 @@ const ShowComplaint = () => {
               isReadOnly
               type="text"
               className="max-w-[30rem]"
-              defaultValue={new Date(
-                complaint?.dateOfCompletion
-              ).toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              defaultValue={
+                complaint?.dateOfCompletion &&
+                new Date(complaint?.dateOfCompletion).toLocaleDateString(
+                  "en-US",
+                  {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  }
+                )
+              }
             />
           </div>
         </div>

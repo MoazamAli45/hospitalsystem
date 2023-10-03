@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function Hero() {
   const navigate = useNavigate();
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth, user } = useSelector((state) => state.auth);
 
   return (
     <div className="bg-var(--softBg)">
@@ -56,6 +56,42 @@ export default function Hero() {
                 >
                   Login
                 </Button>
+              )}
+              {user?.role === "GSO" && (
+                <Button
+                  color="primary"
+                  className="px-20 py-5 text-base font-medium rounded-full"
+                  onClick={() => navigate("/gso/allocate-complaints")}
+                >
+                  Allocate Complaints
+                </Button>
+              )}
+              {user?.role === "DIR" && (
+                <Button
+                  color="primary"
+                  className="px-20 py-5 text-base font-medium rounded-full"
+                  onClick={() => navigate("/director/all-complaints")}
+                >
+                  All Complaints
+                </Button>
+              )}
+              {user?.role === "DEP" && (
+                <div className="flex  flex-col sm:flex-row gap-[2rem]">
+                  <Button
+                    color="primary"
+                    className="px-7 py-5 text-base font-medium rounded-full"
+                    onClick={() => navigate("/register-complaint")}
+                  >
+                    Register Complaint
+                  </Button>
+                  <Button
+                    color="primary"
+                    className="px-7 py-5 text-base font-medium rounded-full"
+                    onClick={() => navigate("/view-complaint")}
+                  >
+                    View Complaint
+                  </Button>
+                </div>
               )}
             </div>
           </div>
