@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react";
-import home from "../../assets/hospital.jpg";
+import home from "../../assets/hospital1.jpg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function Hero() {
@@ -97,11 +97,9 @@ export default function Hero() {
           </div>
           <div className="relative mt-16 h-80 lg:mt-8">
             <img
-              className="bg-var(--softBg)/5 absolute left-0 top-0 w-[57rem] max-w-none rounded-md object-right-bottom object-cover"
+              className="bg-var(--softBg)/5 absolute left-0 top-0 w-[20rem] max-w-none rounded-md object-right-bottom object-cover"
               src={home}
               alt="Home"
-              width={1824}
-              height={1080}
             />
           </div>
         </div>
