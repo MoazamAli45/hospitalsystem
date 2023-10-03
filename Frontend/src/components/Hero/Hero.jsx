@@ -12,7 +12,7 @@ export default function Hero() {
       {/* Use CSS variable for background color */}
       <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-16 lg:px-8">
         <div className="bg-var(--softBg) relative isolate overflow-hidden px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-          <svg
+          {/* <svg
             viewBox="0 0 1024 1024"
             className=" absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
             aria-hidden="true"
@@ -30,7 +30,7 @@ export default function Hero() {
                 <stop offset={1} stopColor="#E935C1" />
               </radialGradient>
             </defs>
-          </svg>
+          </svg> */}
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
             <h2 className="text-var(--textColor)  text-3xl font-bold tracking-tight sm:text-4xl">
               {" "}
