@@ -14,7 +14,7 @@ export default function Hero() {
         <div className="bg-var(--softBg) relative isolate overflow-hidden px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
           <svg
             viewBox="0 0 1024 1024"
-            className=" absolute left-1/2 top-1/2 z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
+            className=" absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
             aria-hidden="true"
           >
             <circle
@@ -60,7 +60,7 @@ export default function Hero() {
               {user?.role === "GSO" && (
                 <Button
                   color="primary"
-                  className="px-20 py-5 text-base font-medium rounded-full"
+                  className="px-20 py-5 text-base font-medium rounded-full "
                   onClick={() => navigate("/gso/allocate-complaints")}
                 >
                   Allocate Complaints
@@ -87,7 +87,9 @@ export default function Hero() {
                   <Button
                     color="primary"
                     className="px-7 py-5 text-base font-medium rounded-full"
-                    onClick={() => navigate("/view-complaint")}
+                    onClick={() => {
+                      return navigate("/view-complaint");
+                    }}
                   >
                     View Complaint
                   </Button>
