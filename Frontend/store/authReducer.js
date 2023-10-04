@@ -102,7 +102,7 @@ const authSlice = createSlice({
     });
     builder.addCase(signup.rejected, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload.message;
+      state.error = payload?.message;
     });
     builder.addCase(login.pending, (state) => {
       state.isLoading = true;
@@ -115,7 +115,7 @@ const authSlice = createSlice({
     });
     builder.addCase(login.rejected, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload.message;
+      state.error = payload?.message;
     });
 
     //   Logout
@@ -149,7 +149,7 @@ const authSlice = createSlice({
     builder.addCase(updatePassword.rejected, (state, { payload }) => {
       state.loadingPass = false;
       state.isLoading = false;
-      state.error = payload.message;
+      state.error = payload?.message;
     });
 
     //  update Me
@@ -165,7 +165,7 @@ const authSlice = createSlice({
     });
     builder.addCase(updateMe.rejected, (state, { payload }) => {
       state.loadingProf = false;
-      state.error = payload.message;
+      state.error = payload?.message;
     });
 
     //   GET me
@@ -180,7 +180,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getUser.rejected, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload.message;
+      state.error = payload?.message;
     });
   },
 });

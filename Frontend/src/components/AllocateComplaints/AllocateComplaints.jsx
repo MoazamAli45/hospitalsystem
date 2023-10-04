@@ -79,7 +79,9 @@ export default function AllocateComplaints() {
   return (
     <div className="my-[2rem]">
       <ToastContainer position="top-center" autoClose={2000} />
-      <h1 className="text-3xl font-bold text-center my-[1rem]">Complaints</h1>
+      <h1 className="text-3xl font-bold text-center my-[1rem]">
+        Allocate Job Orders
+      </h1>
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"

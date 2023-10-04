@@ -35,9 +35,7 @@ export default function AllComplaints() {
   return (
     <div className="my-[2rem]">
       <ToastContainer position="top-center" autoClose={2000} />
-      <h1 className="text-3xl font-bold text-center my-[1rem]">
-        All Complaints
-      </h1>
+      <h1 className="text-3xl font-bold text-center my-[1rem]">All Jobs</h1>
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"

@@ -47,19 +47,19 @@ export default function Navbar() {
   let menuItems = [];
   if (user?.role === "DEP")
     menuItems = [
-      { name: "Register Complaints", link: "/register-complaint" },
+      { name: "Register Job Order", link: "/register-complaint" },
       { name: "Job Orders", link: "/job-orders" },
       { name: "Completed Jobs", link: "/completed-jobs" },
     ];
 
   if (user?.role === "GSO")
     menuItems = [
-      { name: "Allocate Complaints", link: "/gso/allocate-complaints" },
+      { name: "Allocate Job Orders", link: "/gso/allocate-complaints" },
       { name: "Job Orders", link: "/gso/allocated-complaints" },
     ];
 
   if (user?.role === "DIR")
-    menuItems = [{ name: "All Complaints", link: "/director/all-complaints" }];
+    menuItems = [{ name: "All Job Orders", link: "/director/all-complaints" }];
 
   const logoutHandler = () => {
     dispatch(logout()).then(() => {
@@ -88,7 +88,7 @@ export default function Navbar() {
               color={`${path !== "/register-complaint" ? "foreground" : ""}`}
               href="/register-complaint"
             >
-              Register Complaint
+              Register Job Order
             </Link>
           )}
         </NavbarItem>
@@ -122,7 +122,7 @@ export default function Navbar() {
               }`}
               href="/gso/allocate-complaints"
             >
-              Allocate Complaints
+              Allocate Job Orders
             </Link>
           </NavbarItem>
         )}
@@ -147,7 +147,7 @@ export default function Navbar() {
               }`}
               href="/director/all-complaints"
             >
-              All Complaints
+              All Jobs
             </Link>
           </NavbarItem>
         )}

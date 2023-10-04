@@ -62,9 +62,9 @@ export default function Hero() {
                   <Button
                     color="primary"
                     className="px-7 py-5 text-base font-medium rounded-full"
-                    onClick={() => navigate("/allocate-complaint")}
+                    onClick={() => navigate("/gso/allocate-complaints")}
                   >
-                    Allocate Complaints
+                    Allocate Job Orders
                   </Button>
                   <Button
                     color="primary"
@@ -83,7 +83,7 @@ export default function Hero() {
                   className="px-20 py-5 text-base font-medium rounded-full"
                   onClick={() => navigate("/director/all-complaints")}
                 >
-                  All Complaints
+                  All Job Orders
                 </Button>
               )}
               {user?.role === "DEP" && (
@@ -93,7 +93,7 @@ export default function Hero() {
                     className="px-7 py-5 text-base font-medium rounded-full"
                     onClick={() => navigate("/register-complaint")}
                   >
-                    Register Complaint
+                    Register Job Order
                   </Button>
                   <Button
                     color="primary"

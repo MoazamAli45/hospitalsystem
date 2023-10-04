@@ -28,7 +28,7 @@ const ShowComplaint = () => {
   return (
     <form className="my-[2rem]">
       <ToastContainer position="top-center" autoClose={2000} />
-      <h1 className="text-center text-[2rem] font-bold ">Show Complaint </h1>
+      <h1 className="text-center text-[2rem] font-bold ">Show Job Order</h1>
       {isLoading && (
         <div className="flex justify-center align-center h-[90vh]">
           <Spinner color="primary" className="w-8rem h-[8rem]" />
