@@ -48,13 +48,14 @@ export default function Navbar() {
   if (user?.role === "DEP")
     menuItems = [
       { name: "Register Complaints", link: "/register-complaint" },
-      { name: "View Complaints", link: "/view-complaint" },
+      { name: "Job Orders", link: "/job-orders" },
       { name: "Completed Jobs", link: "/completed-jobs" },
     ];
 
   if (user?.role === "GSO")
     menuItems = [
       { name: "Allocate Complaints", link: "/gso/allocate-complaints" },
+      { name: "Job Orders", link: "/gso/allocated-complaints" },
     ];
 
   if (user?.role === "DIR")
@@ -94,11 +95,11 @@ export default function Navbar() {
         <NavbarItem>
           {user?.role === "DEP" && (
             <Link
-              href="/view-complaint"
+              href="/job-orders"
               aria-current="page"
-              color={`${path !== "/view-complaint" ? "foreground" : ""}`}
+              color={`${path !== "/job-orders" ? "foreground" : ""}`}
             >
-              View Complaints
+              Job Orders
             </Link>
           )}
         </NavbarItem>
@@ -122,6 +123,19 @@ export default function Navbar() {
               href="/gso/allocate-complaints"
             >
               Allocate Complaints
+            </Link>
+          </NavbarItem>
+        )}
+        {/*  FOR GSO ALLOCATED COMPLAINTS */}
+        {user?.role === "GSO" && (
+          <NavbarItem>
+            <Link
+              color={`${
+                path !== "/gso/allocated-complaints" ? "foreground" : ""
+              }`}
+              href="/gso/allocated-complaints"
+            >
+              Job Orders
             </Link>
           </NavbarItem>
         )}

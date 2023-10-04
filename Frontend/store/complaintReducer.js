@@ -38,6 +38,20 @@ export const getAllComplaints = createAsyncThunk(
   }
 );
 
+export const getAllocatedComplaints = createAsyncThunk(
+  "/complaint/getAllocatedComplaints",
+  async (data, thunkApi) => {
+    try {
+      const complaints = await api.get(
+        "/api/v1/complaints/allocated-complaints"
+      );
+
+      return complaints.data;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  }
+);
 export const getAllocateComplaints = createAsyncThunk(
   "/complaint/getAllocateComplaints",
   async (data, thunkApi) => {
@@ -173,6 +187,20 @@ const complaintSlice = createSlice({
       state.isLoading = false;
       state.error = payload.message;
     });
+    //    ALLOCATED COMPLAINTS
+    builder.addCase(getAllocatedComplaints.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllocatedComplaints.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.complaints = payload.data.complaints;
+      state.error = "";
+    });
+    builder.addCase(getAllocatedComplaints.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload.message;
+    });
+
     builder.addCase(getPendingComplaints.pending, (state) => {
       state.isLoading = true;
     });

@@ -58,13 +58,24 @@ export default function Hero() {
                 </Button>
               )}
               {user?.role === "GSO" && (
-                <Button
-                  color="primary"
-                  className="px-20 py-5 text-base font-medium rounded-full "
-                  onClick={() => navigate("/gso/allocate-complaints")}
-                >
-                  Allocate Complaints
-                </Button>
+                <div className="flex  flex-col sm:flex-row gap-[2rem]">
+                  <Button
+                    color="primary"
+                    className="px-7 py-5 text-base font-medium rounded-full"
+                    onClick={() => navigate("/allocate-complaint")}
+                  >
+                    Allocate Complaints
+                  </Button>
+                  <Button
+                    color="primary"
+                    className="px-7 py-5 text-base font-medium rounded-full"
+                    onClick={() => {
+                      return navigate("/gso/allocated-complaints");
+                    }}
+                  >
+                    Job Orders
+                  </Button>
+                </div>
               )}
               {user?.role === "DIR" && (
                 <Button
@@ -88,10 +99,10 @@ export default function Hero() {
                     color="primary"
                     className="px-7 py-5 text-base font-medium rounded-full"
                     onClick={() => {
-                      return navigate("/view-complaint");
+                      return navigate("/job-orders");
                     }}
                   >
-                    View Complaint
+                    Job Orders
                   </Button>
                 </div>
               )}

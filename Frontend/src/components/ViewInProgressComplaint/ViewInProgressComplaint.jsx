@@ -95,9 +95,7 @@ export default function ViewInProgressComplaint() {
     <div className="my-[2rem]">
       <ToastContainer position="top-center" autoClose={2000} />
 
-      <h1 className="text-3xl font-bold text-center my-[1rem]">
-        View Complaints
-      </h1>
+      <h1 className="text-3xl font-bold text-center my-[1rem]">Job Orders</h1>
       <div className="flex flex-col gap-3">
         <Table
           aria-label="Example static collection table"

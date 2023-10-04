@@ -8,7 +8,7 @@ const HodRoutes = () => {
   return (
     <Routes>
       <Route path="/register-complaint" element={<RegisterComplaint />} />
-      <Route path="/view-complaint" element={<ViewInProgressComplaint />} />
+      <Route path="/job-orders" element={<ViewInProgressComplaint />} />
       <Route path="/completed-jobs" element={<CompletedJobs />} />
     </Routes>
   );

@@ -11,6 +11,7 @@ const {
   updateComplaint,
   getCompletedComplaints,
   getInProgressComplaints,
+  getAllocatedComplaints,
 } = require("../Controller/complaintController");
 
 router.use(authController.protect);
@@ -18,6 +19,8 @@ router.use(authController.protect);
 router.post("/", createComplaint);
 router.get("/", getAllComplaints);
 router.get("/allocate-complaints", getAllocateComplaints);
+router.get("/allocated-complaints", getAllocatedComplaints);
+
 router.get("/pending-complaints", getPendingComplaints);
 router.get("/completed-complaints", getCompletedComplaints);
 router.get("/inprogress-complaints", getInProgressComplaints);
