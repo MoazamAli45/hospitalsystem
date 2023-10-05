@@ -9,21 +9,21 @@ import { Spinner } from "@nextui-org/react";
 import "react-toastify/dist/ReactToastify.css";
 //  Departments
 const departments = [
-  { name: "X Ray Dept", value: "x-ray" },
-  { name: "Emergency Dept", value: "emergency" },
-  { name: "Lab & Blood Bank Dept", value: "lab and blood" },
-  { name: "OPD Dept", value: "opd" },
-  { name: "Inpatient Dept", value: "inpatient" },
+  { name: "Administration", value: "administration" },
+  { name: "Pharmacy", value: "pharmacy" },
+  { name: "Accounts", value: "accounts" },
+  { name: "Dialysis", value: "dialysis" },
+  { name: "Triage", value: "triage" },
   {
-    name: "Bin Qutab College of Health Sciences",
-    value: "bin qutab college of health sciences",
+    name: "Laboratory",
+    value: "laboratory",
   },
-  { name: "Rehabilitation Dept", value: "rehabilitation" },
-  { name: "Eye Dept", value: "eye" },
-  { name: "Dental Dept", value: "dental" },
-  { name: "Hospital General Maintenance Dept", value: "hospital maintenance" },
-  { name: "Dialysis Dept", value: "dialysis" },
-  { name: "Surgical Dept", value: "surgical" },
+  { name: "In Patient Wards", value: "in patient wards" },
+  { name: "Store", value: "store" },
+  { name: "Energeny", value: "energeny" },
+  { name: "Electrical", value: "electrical" },
+  { name: "Plumbing", value: "plumbing" },
+  { name: "General", value: "general" },
 ];
 
 export default function Signup() {

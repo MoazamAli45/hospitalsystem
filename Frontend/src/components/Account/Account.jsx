@@ -16,21 +16,21 @@ import "react-toastify/dist/ReactToastify.css";
 import NotLoggedIn from "../NotLoggedIn/NotLoggedIn";
 
 const departments = [
-  { name: "X Ray Dept", value: "x-ray" },
-  { name: "Emergency Dept", value: "emergency" },
-  { name: "Lab & Blood Bank Dept", value: "lab and blood" },
-  { name: "OPD Dept", value: "opd" },
-  { name: "Inpatient Dept", value: "inpatient" },
+  { name: "Administration", value: "administration" },
+  { name: "Pharmacy", value: "pharmacy" },
+  { name: "Accounts", value: "accounts" },
+  { name: "Dialysis", value: "dialysis" },
+  { name: "Triage", value: "triage" },
   {
-    name: "Bin Qutab College of Health Sciences",
-    value: "bin qutab college of health sciences",
+    name: "Laboratory",
+    value: "laboratory",
   },
-  { name: "Rehabilitation Dept", value: "rehabilitation" },
-  { name: "Eye Dept", value: "eye" },
-  { name: "Dental Dept", value: "dental" },
-  { name: "Hospital General Maintenance Dept", value: "hospital maintenance" },
-  { name: "Dialysis Dept", value: "dialysis" },
-  { name: "Surgical Dept", value: "surgical" },
+  { name: "In Patient Wards", value: "in patient wards" },
+  { name: "Store", value: "store" },
+  { name: "Energeny", value: "energeny" },
+  { name: "Electrical", value: "electrical" },
+  { name: "Plumbing", value: "plumbing" },
+  { name: "General", value: "general" },
 ];
 const Account = () => {
   const nameRef = useRef();
@@ -39,8 +39,15 @@ const Account = () => {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const dispatch = useDispatch();
-  const { user, error, updateProfile, updatePass, loadingProf, loadingPass,isAuth } =
-    useSelector((state) => state.auth);
+  const {
+    user,
+    error,
+    updateProfile,
+    updatePass,
+    loadingProf,
+    loadingPass,
+    isAuth,
+  } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -100,8 +107,8 @@ const Account = () => {
     passwordRef.current.value = "";
     confirmPasswordRef.current.value = "";
   };
-  return (
-  isAuth ?  <div className="my-[3rem]">
+  return isAuth ? (
+    <div className="my-[3rem]">
       <ToastContainer position="top-center" autoClose={2000} />
       <h1 className="text-primary font-bold text-3xl">Your Account Settings</h1>
       <div className="flex flex-col gap-[1rem] my-[1rem]">
@@ -186,7 +193,9 @@ const Account = () => {
           )}
         </div>
       </div>
-    </div> : <NotLoggedIn/>
+    </div>
+  ) : (
+    <NotLoggedIn />
   );
 };
 
