@@ -36,7 +36,15 @@ export default function Hero() {
               {" "}
               {/* Use CSS variable for text color */}
               Welcome!
+              <span className="text-primary">
+                {user && user?.role === "DIR" && " Director"}{" "}
+                {user && user?.role === "GSO" && " GSO"}
+                {user &&
+                  user?.role === "DEP" &&
+                  user?.department.toUpperCase() + " Department"}
+              </span>
             </h2>
+
             <br />
             <h2 className="text-gray-500  text-2xl font-bold tracking-tight sm:text-3xl">
               Start using our app today.
