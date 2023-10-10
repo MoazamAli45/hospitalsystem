@@ -149,6 +149,9 @@ const complaintSlice = createSlice({
       state.update = false;
       state.loadingUpdate = false;
     },
+    resetUpdate: (state) => {
+      state.update = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createComplaint.pending, (state) => {
@@ -271,4 +274,4 @@ const complaintSlice = createSlice({
 });
 
 export default complaintSlice.reducer;
-export const { reset } = complaintSlice.actions;
+export const { reset, resetUpdate } = complaintSlice.actions;

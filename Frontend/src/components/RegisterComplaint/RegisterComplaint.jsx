@@ -33,7 +33,13 @@ const RegisterComplaint = () => {
     const jobDesc = jobRef.current.value;
     const dateOfReq = defaultDate;
     const natureOfJob = natureRef.current.value;
+
     const estimatedCost = +costRef.current.value;
+    if (isNaN(estimatedCost)) {
+      toast.error("Please enter valid number");
+      return;
+    }
+
     const urgency = selectedUrgency;
 
     const data = {

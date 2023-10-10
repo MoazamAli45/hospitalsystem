@@ -26,6 +26,7 @@ import {
   getInprogressComplaints,
   getPendingComplaints,
   updateComplaint,
+  resetUpdate,
 } from "../../../store/complaintReducer";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -40,6 +41,7 @@ export default function ViewInProgressComplaint() {
     error,
     loadingUpdate,
     update,
+
     inProgComplaints,
   } = useSelector((state) => state.complaint);
   const { user } = useSelector((state) => state.auth);
@@ -58,13 +60,12 @@ export default function ViewInProgressComplaint() {
   useEffect(() => {
     dispatch(getPendingComplaints());
     dispatch(getInprogressComplaints());
-
     if (update) {
-      toast.success("Complaint Updated Successfully");
+      toast.success("Updated Successfully!");
     }
-
-    () => {
+    return () => {
       toast.dismiss();
+      dispatch(resetUpdate());
     };
   }, [dispatch, update]);
   // console.log(user);
