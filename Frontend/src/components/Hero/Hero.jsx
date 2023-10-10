@@ -41,7 +41,7 @@ export default function Hero() {
                 {user && user?.role === "GSO" && " GSO"}
                 {user &&
                   user?.role === "DEP" &&
-                  user?.department.toUpperCase() + " Department"}
+                  user?.name.toUpperCase()[0] + user?.name.slice(1)}
               </span>
             </h2>
 
