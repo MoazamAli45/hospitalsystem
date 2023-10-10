@@ -27,7 +27,9 @@ import {
   getPendingComplaints,
   updateComplaint,
 } from "../../../store/complaintReducer";
+
 import "react-toastify/dist/ReactToastify.css";
+
 import { Chip } from "@nextui-org/react";
 
 export default function ViewInProgressComplaint() {
@@ -40,6 +42,7 @@ export default function ViewInProgressComplaint() {
     update,
     inProgComplaints,
   } = useSelector((state) => state.complaint);
+  const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState("");
 
@@ -60,9 +63,18 @@ export default function ViewInProgressComplaint() {
       toast.success("Complaint Updated Successfully");
     }
   }, [dispatch, update]);
+  // console.log(user);
   // console.log(complaints);
 
+  const userComplaints = complaints.filter((complaint) =>
+    complaint.user.map((u) => u._id).includes(user._id)
+  );
+  const userInprogressComplaints = inProgComplaints.filter((complaint) =>
+    complaint.user.map((u) => u._id).includes(user._id)
+  );
+
   // console.log(inProgComplaints);
+  // console.log(userInprogressComplaints);
 
   const openModalWithId = (id) => {
     setSelectedId(id);
@@ -124,7 +136,7 @@ export default function ViewInProgressComplaint() {
             isLoading={isLoading}
             loadingContent={<Spinner label="Loading..." />}
           >
-            {complaints.map((complaint, id) => (
+            {userComplaints.map((complaint, id) => (
               <TableRow key={id}>
                 <TableCell>{complaint?.department}</TableCell>
                 <TableCell>{complaint?.hod}</TableCell>
@@ -153,7 +165,7 @@ export default function ViewInProgressComplaint() {
                 <TableCell></TableCell>
               </TableRow>
             ))}
-            {inProgComplaints.map((complaint, id) => (
+            {userInprogressComplaints.map((complaint, id) => (
               <TableRow key={id}>
                 <TableCell>{complaint?.department}</TableCell>
                 <TableCell>{complaint?.hod}</TableCell>

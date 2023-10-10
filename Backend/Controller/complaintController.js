@@ -1,7 +1,13 @@
 const Complaint = require("../Model/complaintModel");
+const User = require("../Model/userModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createComplaint = catchAsync(async (req, res) => {
+  const userId = req.user._id;
+
+  // Add user ID to the request body
+  req.body.user = userId;
+
   const complaint = await Complaint.create(req.body);
 
   res.status(201).json({
@@ -13,10 +19,13 @@ exports.createComplaint = catchAsync(async (req, res) => {
 });
 
 exports.getPendingComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "PENDING" }).sort({
-    dateOfReq: -1,
-  });
+  const complaints = await Complaint.find({ status: "PENDING" })
+    .sort({
+      dateOfReq: -1,
+    })
+    .populate("user");
 
+  console.log(complaints);
   res.status(200).json({
     status: "success",
     total: complaints.length,
@@ -27,9 +36,11 @@ exports.getPendingComplaints = catchAsync(async (req, res) => {
 });
 
 exports.getCompletedComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "COMPLETED" }).sort({
-    dateOfReq: -1,
-  });
+  const complaints = await Complaint.find({ status: "COMPLETED" })
+    .sort({
+      dateOfReq: -1,
+    })
+    .populate("user");
 
   res.status(200).json({
     status: "success",
@@ -40,9 +51,11 @@ exports.getCompletedComplaints = catchAsync(async (req, res) => {
   });
 });
 exports.getInProgressComplaints = catchAsync(async (req, res) => {
-  const complaints = await Complaint.find({ status: "INPROGRESS" }).sort({
-    dateOfReq: -1,
-  });
+  const complaints = await Complaint.find({ status: "INPROGRESS" })
+    .sort({
+      dateOfReq: -1,
+    })
+    .populate("user");
 
   res.status(200).json({
     status: "success",

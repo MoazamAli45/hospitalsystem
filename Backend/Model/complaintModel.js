@@ -39,6 +39,12 @@ const complaintSchema = new mongoose.Schema({
   dateOfCompletion: {
     type: Date,
   },
+  user: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "users",
+    },
+  ],
 });
 
 const Complaint = mongoose.model("complaints", complaintSchema);

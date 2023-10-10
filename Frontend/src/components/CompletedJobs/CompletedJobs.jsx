@@ -19,6 +19,7 @@ export default function CompletedJobs() {
   const { complaints, isLoading, error } = useSelector(
     (state) => state.complaint
   );
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getCompletedComplaints());
@@ -30,6 +31,10 @@ export default function CompletedJobs() {
       toast.dismiss();
     };
   }, [dispatch, error]);
+
+  const userComplaints = complaints.filter((complaint) =>
+    complaint.user.map((u) => u._id).includes(user._id)
+  );
 
   return (
     <div className="my-[2rem]">
@@ -65,7 +70,7 @@ export default function CompletedJobs() {
             isLoading={isLoading}
             loadingContent={<Spinner label="Loading..." />}
           >
-            {complaints.map((complaint, id) => (
+            {userComplaints.map((complaint, id) => (
               <TableRow key={id}>
                 <TableCell>{complaint?.department}</TableCell>
                 <TableCell>{complaint?.hod}</TableCell>
