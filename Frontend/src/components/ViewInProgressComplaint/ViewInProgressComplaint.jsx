@@ -62,6 +62,10 @@ export default function ViewInProgressComplaint() {
     if (update) {
       toast.success("Complaint Updated Successfully");
     }
+
+    () => {
+      toast.dismiss();
+    };
   }, [dispatch, update]);
   // console.log(user);
   // console.log(complaints);
@@ -133,7 +137,7 @@ export default function ViewInProgressComplaint() {
             </TableColumn>
           </TableHeader>
           <TableBody
-            isLoading={isLoading}
+            isLoading={loadingUpdate || isLoading}
             loadingContent={<Spinner label="Loading..." />}
           >
             {userComplaints.map((complaint, id) => (
