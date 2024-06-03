@@ -44,7 +44,7 @@ const createdSendToken = (user, statusCode, res) => {
 
 //  Signup
 exports.signup = catchAsync(async (req, res) => {
-  // console.log("Signup", req.body);
+  console.log("Signup", req.body);
   const user = await User.create(req.body);
 
   createdSendToken(user, 201, res);
@@ -89,6 +89,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   const currentUser = await User.findById(decoded.id);
+  console.log(currentUser, "USER");
 
   if (!currentUser) {
     throw new AppError(

@@ -102,7 +102,7 @@ export default function AllComplaints() {
                     className="capitalize text-white"
                     size="sm"
                   >
-                    {complaint?.status}
+                    {complaint?.status || "PENDING"}
                   </Chip>
                 </TableCell>
                 <TableCell>

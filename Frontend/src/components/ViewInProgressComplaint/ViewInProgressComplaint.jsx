@@ -200,7 +200,7 @@ export default function ViewInProgressComplaint() {
                       className="capitalize text-white"
                       size="sm"
                     >
-                      {complaint?.status}
+                      {complaint?.status || "PENDING"}
                     </Chip>
                     {complaint?.status === "INPROGRESS" && (
                       <Button
